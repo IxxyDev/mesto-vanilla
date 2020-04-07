@@ -67,6 +67,31 @@
                 </div>
             </div>
         </section>
+        <section class="popup">
+            <div class="popup__content">
+                <img class="popup__close-button" src="images/Close Icon.svg" alt="Закрыть окно редактирования">
+                <h3 class="popup__title">Редактировать профиль</h3>
+                <form class="popup__form">
+                    <input 
+                    class="popup__input"
+                    name="name"
+                    type="text"
+                    required
+                    minlength="2"
+                    maxlength="25"
+                    value="Жак-Ив Кусто">
+                    <input 
+                    class="popup__input"
+                    name="description"
+                    type="text"
+                    required
+                    minlength="2"
+                    maxlength="35"
+                    value="Исследователь океана">
+                    <button class="popup__button" id="submit" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </section>
         <footer class="footer">
             <p class="footer__copyright">&copy;&nbsp;2020 Mesto Russia</p>
         </footer>
