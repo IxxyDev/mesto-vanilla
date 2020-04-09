@@ -3,4 +3,13 @@
     max-width: 882px;
     border-bottom: 1px solid #545454;
     padding-bottom: 40px;
+    padding-top: 45px;
+}
+
+@media screen and (max-width: 882px) {
+    .header {
+        width: 100%;
+        padding-bottom: 31px;
+        padding-top: 28px;
+    }
 }
