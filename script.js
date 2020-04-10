@@ -3,11 +3,19 @@ const closeButton = document.querySelector('.popup__close-button');
 const saveButton = document.querySelector('.popup__button');
 const profile = document.querySelector('.profile');
 const popUp = document.querySelector('.popup');
+const formElement = document.querySelector('.popup__form');
+const profileName = document.querySelector('.profile__name');
+const profileDescription = document.querySelector('.profile__description');
+const nameInput = popUp.querySelector('.popup__input_type_name');
+const descriptionInput = popUp.querySelector('.popup__input_type_description');
+
 
 /* Open and close popUp */
 function openEditForm () {
     popUp.classList.toggle('popup_status_is-opened');
     popUp.classList.toggle('popup_status_is-closed');
+    nameInput.value = profileName.textContent;
+    descriptionInput.value = profileDescription.textContent;
 };
 editButton.addEventListener('click', openEditForm);
 
@@ -19,11 +27,6 @@ closeButton.addEventListener('click', closeEditForm);
 
  
 /* Saving data after editing + prep for submission */
-const formElement = document.querySelector('.popup__form');
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
-const nameInput = popUp.querySelector('.popup__input_type_name');
-const descriptionInput = popUp.querySelector('.popup__input_type_description');
 
 function formSubmitHandler (evt) {
     evt.preventDefault();

@@ -16,10 +16,12 @@
             <div class="profile__info">
                 <img class="profile__avatar" src='./images/Cousteau.png' alt='Фотография профиля'>
                 <div class="profile__data">
-                    <h1 class="profile__name">Жак-Ив Кусто</h1> 
+                    <div class="profile__wrap">
+                        <h1 class="profile__name">Жак-Ив Кусто</h1> 
+                        <button class="profile__edit-button"></button>
+                    </div>
                     <p class="profile__description">Исследователь океана</p>
                 </div>
-                <button class="profile__edit-button"></button>
             </div>
             <button class="profile__add-button"></button>
         </section>
@@ -78,16 +80,14 @@
                     type="text"
                     required
                     minlength="2"
-                    maxlength="25"
-                    value="Жак-Ив Кусто">
+                    maxlength="25">
                     <input 
                     class="popup__input popup__input_type_description"
                     name="description"
                     type="text"
                     required
                     minlength="2"
-                    maxlength="35"
-                    value="Исследователь океана">
+                    maxlength="35">
                     <button class="popup__button" id="submit" type="submit">Сохранить</button>
                 </form>
             </div>
