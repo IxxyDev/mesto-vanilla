@@ -4,8 +4,6 @@
 @import url(./__title/popup__title.css);
 @import url(./__button/popup__button.css);
 @import url(./__close-button/popup__close-button.css);
-@import url(./_status/popup_status_is-closed.css);
-@import url(./_status/popup_stauts_is-opened.css);
 
 .popup {
     position: fixed;
@@ -16,4 +14,5 @@
     background-color: rgba(0, 0, 0, .5);
     align-items: center;
     justify-content: center;
+    display: none;
 }

@@ -11,19 +11,13 @@ const descriptionInput = popUp.querySelector('.popup__input_type_description');
 
 
 /* Open and close popUp */
-function openEditForm () {
-    popUp.classList.toggle('popup_status_is-opened');
-    popUp.classList.toggle('popup_status_is-closed');
+function editForm () {
+    popUp.classList.toggle('popup_is-opened');
     nameInput.value = profileName.textContent;
     descriptionInput.value = profileDescription.textContent;
 };
-editButton.addEventListener('click', openEditForm);
-
-function closeEditForm () {
-    popUp.classList.toggle('popup_status_is-opened');
-    popUp.classList.toggle('popup_status_is-closed');
-};
-closeButton.addEventListener('click', closeEditForm);
+editButton.addEventListener('click', editForm);
+closeButton.addEventListener('click', editForm);
 
  
 /* Saving data after editing + prep for submission */
