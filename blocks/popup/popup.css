@@ -4,6 +4,9 @@
 @import url(./__title/popup__title.css);
 @import url(./__button/popup__button.css);
 @import url(./__close-button/popup__close-button.css);
+@import url(./__image-container/popup__image-container.css);
+@import url(./__description/popup__description.css);
+@import url(./__zoom-image/popup__zoom-image.css);
 
 .popup {
     position: fixed;
@@ -14,5 +17,17 @@
     background-color: rgba(0, 0, 0, .5);
     align-items: center;
     justify-content: center;
-    display: none;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    visibility: hidden;
+    opacity: 0;
+    -moz-transition: visibility 0.5s, opacity 0.5s linear;
+    -webkit-transition: visibility 0.5s, opacity 0.5s linear;
+    -o-transition: visibility 0.5s, opacity 0.5s linear;
+    -ms-transition: visibility 0.5s, opacity 0.5s linear;
+    transition: visibility 0.5s, opacity 0.5s linear;
 }
