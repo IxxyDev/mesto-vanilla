@@ -29,35 +29,35 @@
             </section>
             <section class="elements">
             </section>
-            <section class="popup">
+            <section class="popup popup_type_edit-profile">
                 <div class="popup__content">
-                    <button class="popup__close-button" type="button"></button>
+                    <button class="popup__close-button popup__close-button_type_edit-profile" type="button"></button>
                     <h3 class="popup__title">Редактировать профиль</h3>
-                    <form class="popup__form">
+                    <form class="popup__form popup__form_type_edit-profile">
                         <input class="popup__input popup__input_type_name" name="name" type="text" required
                             minlength="2" maxlength="25">
                         <input class="popup__input popup__input_type_description" name="description" type="text"
                             required minlength="2" maxlength="35">
-                        <button class="popup__button" type="submit">Сохранить</button>
+                        <button class="popup__button popup__button_type_save" type="submit">Сохранить</button>
                     </form>
                 </div>
             </section>
-            <section class="popup popup_add-new-card">
+            <section class="popup popup_type_add-new-card">
                 <div class="popup__content">
-                    <button class="popup__close-button" type="button"></button>
+                    <button class="popup__close-button popup__close-button_type_new-card" type="button"></button>
                     <h3 class="popup__title">Новое место</h3>
-                    <form class="popup__form">
-                        <input class="popup__input popup__input_type_name" name="name" type="text" required
+                    <form class="popup__form popup__form_type_new-card">
+                        <input class="popup__input popup__input_type_card-name" name="name" type="text" required
                             minlength="2" maxlength="25" placeholder="Название места">
-                        <input class="popup__input popup__input_type_description" name="description" type="text"
-                            required minlength="2" maxlength="35" placeholder="Ссылка на картинку">
-                        <button class="popup__button" type="submit">Создать</button>
+                        <input class="popup__input popup__input_type_card-url" name="description" type="text"
+                            required placeholder="Ссылка на картинку">
+                        <button class="popup__button popup__button_type_create" type="submit">Создать</button>
                     </form>
                 </div>
             </section>
             <section class="popup popup_card-zoom">
                 <figure class="popup__image-container">
-                    <button class="popup__close-button" type="button"></button>
+                    <button class="popup__close-button popup__close-button_type_zoom" type="button"></button>
                     <img src="" alt="" class="popup__image">
                     <figcaption class="popup__description"></figcaption>
                 </figure>
