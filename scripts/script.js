@@ -1,10 +1,9 @@
 /* buttons */
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = document.querySelector('.popup__close-button_type_edit-profile');
-const saveButton = document.querySelector('.popup__button_type_save');
 const addCardButton = document.querySelector('.profile__add-button');
 const closeAddCardButton = document.querySelector('.popup__close-button_type_new-card');
-const createButton = document.querySelector('.popup__buttons_type_create');
+const closeZoomedImageButton = document.querySelector('.popup__close-button_type_zoom-image');
 
 /* blocks and templates */
 const profile = document.querySelector('.profile');
@@ -23,8 +22,9 @@ const cardUrlInput = document.querySelector('.popup__input_type_card-url');
 
 /* popups elements */
 const popUp = document.querySelector('.popup');
+const popupImage = document.querySelector('.popup_type_zoom-image')
 const popupFigcaption = document.querySelector('.popup__description');
-const popupZoomedImage = document.querySelector('.popup__image');
+const popupZoomedImage = document.querySelector('.popup__zoom-image');
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const popupAddCard = document.querySelector('.popup_type_add-new-card');
 
@@ -84,7 +84,7 @@ function openZoomedImg(evt) {
   popupZoomedImage.src = evt.target.src;
   popupZoomedImage.alt = evt.target.alt;
   popupFigcaption.textContent = evt.target.alt;
-  togglePopup(evt.target);
+  togglePopup(popupImage);
 };
 
 function deleteCard(evt) {
@@ -138,4 +138,5 @@ closeEditButton.addEventListener('click', (evt) => togglePopup(popupEditProfile)
 addCardButton.addEventListener('click', (evt) => togglePopup(popupAddCard));
 closeAddCardButton.addEventListener('click', (evt) => togglePopup(popupAddCard));
 formEditElement.addEventListener('submit', formEditProfileSubmitHandler);
-formAddCardElement.addEventListener('submit', formAddCardSubmitHandler); 
+formAddCardElement.addEventListener('submit', formAddCardSubmitHandler);
+closeZoomedImageButton.addEventListener('click', (evt) => togglePopup(popupImage)); 
