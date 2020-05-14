@@ -1,3 +1,5 @@
+/* Спасибо за ревью, в первый раз не раскрыл окно с вашим общим обзором...*/
+
 /* buttons */
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = document.querySelector('.popup__close-button_type_edit-profile');
@@ -20,7 +22,6 @@ const cardNameInput = document.querySelector('.popup__input_type_card-name');
 const cardUrlInput = document.querySelector('.popup__input_type_card-url');
 
 /* popups elements */
-const popUp = document.querySelector('.popup');
 const popupImage = document.querySelector('.popup_type_zoom-image')
 const popupFigcaption = document.querySelector('.popup__description');
 const popupZoomedImage = document.querySelector('.popup__zoom-image');
@@ -55,6 +56,34 @@ const initialCards = [
   },
 ];
 
+/* Open and close popup */
+function togglePopup (popup) {
+  popup.classList.toggle('popup_is-opened');
+};
+
+
+function toggleLikeStatus(evt) {
+  evt.target.classList.toggle('element__like-button_active');
+};
+
+
+function openZoomedImg(evt) {
+  popupZoomedImage.src = evt.target.src;
+  popupZoomedImage.alt = evt.target.alt;
+  popupFigcaption.textContent = evt.target.alt;
+  togglePopup(popupImage);
+};
+
+
+function deleteCard(evt) {
+  const element = evt.target.closest('.element');
+  element.querySelector('.element__like-button').removeEventListener('click', toggleLikeStatus);
+  element.querySelector('.element__delete-button').removeEventListener('click', deleteCard);
+  element.querySelector('.element__image').removeEventListener('click', openZoomedImg);
+  element.remove();
+};
+
+
 /* main app logix */
 function createCard(item) {
   const cardElement = cardTemplate.cloneNode(true);
@@ -67,42 +96,6 @@ function createCard(item) {
   cardElement.querySelector('.element__image').addEventListener('click', openZoomedImg);
   return cardElement;
 };
-
-function openZoomedImg(evt) {
-  popupZoomedImage.src = evt.target.src;
-  popupZoomedImage.alt = evt.target.alt;
-  popupFigcaption.textContent = evt.target.alt;
-  togglePopup(popupImage);
-};
-
-function deleteCard(evt) {
-  const element = evt.target.closest('.element');
-  element.querySelector('.element__like-button').removeEventListener('click', toggleLikeStatus);
-  element.querySelector('.element__delete-button').removeEventListener('click', deleteCard);
-  element.querySelector('.element__image').removeEventListener('click', openZoomedImg);
-  element.remove();
-};
-
-function toggleLikeStatus(evt) {
-  evt.target.classList.toggle('element__like-button_active');
-};
-
-function fillForms (popup) {
-  if ((popup.classList.contains('popup_type_edit-profile') && !popup.classList.contains('popup_is-opened'))) {
-    profileNameInput.value = profileName.textContent;
-    profileDescriptionInput.value = profileDescription.textContent;
-} if ((popup.classList.contains('popup_type_add-new-card') && !popup.classList.contains('popup_is-opened'))) {
-    cardNameInput.value = '';
-    cardUrlInput.value = '';
-}
-};
-
-/* Open and close popup */
-function togglePopup (popup) {
-  fillForms(popup);
-  popup.classList.toggle('popup_is-opened');
-};
-
 
 /* cards renedring */
 function loadCards(cards) {
@@ -135,12 +128,23 @@ function formCreateCardSubmitHandler (evt) {
   togglePopup(popupCreateCard);
 };
 
+function handleEditProfileButtonClick() {
+  profileNameInput.value = profileName.textContent;
+  profileDescriptionInput.value = profileDescription.textContent;
+  togglePopup(popupEditProfile);
+};
+
+function handleCreateCardButtonClick() {
+  cardNameInput.value = '';
+  cardUrlInput.value = '';
+  togglePopup(popupCreateCard);
+};
 
 
 /* listeners */
-editButton.addEventListener('click', (evt) => togglePopup(popupEditProfile));
+editButton.addEventListener('click', handleEditProfileButtonClick);
+createCardButton.addEventListener('click', handleCreateCardButtonClick);
 closeEditButton.addEventListener('click', (evt) => togglePopup(popupEditProfile));
-createCardButton.addEventListener('click', (evt) => togglePopup(popupCreateCard));
 closeCreateCardButton.addEventListener('click', (evt) => togglePopup(popupCreateCard));
 formEditElement.addEventListener('submit', formEditProfileSubmitHandler);
 formCreateCardElement.addEventListener('submit', formCreateCardSubmitHandler);
