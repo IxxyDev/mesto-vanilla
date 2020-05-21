@@ -35,9 +35,11 @@
                     <h3 class="popup__title">Редактировать профиль</h3>
                     <form class="popup__form popup__form_type_edit-profile">
                         <input class="popup__input popup__input_type_name" name="name" type="text" required
-                            minlength="2" maxlength="25">
+                            minlength="2" maxlength="40" pattern="[A-Za-zА-Яа-яё -]{1,}">
+                        <span class='popup__input-error' id='name-input-error'></span>
                         <input class="popup__input popup__input_type_description" name="description" type="text"
-                            required minlength="2" maxlength="35">
+                            required minlength="2" maxlength="200">
+                        <span class='popup__input-error' id='description-input-error'></span>
                         <button class="popup__button" type="submit">Сохранить</button>
                     </form>
                 </div>
@@ -48,9 +50,11 @@
                     <h3 class="popup__title">Новое место</h3>
                     <form class="popup__form popup__form_type_new-card">
                         <input class="popup__input popup__input_type_card-name" name="name" type="text" required
-                            minlength="2" maxlength="25" placeholder="Название места">
-                        <input class="popup__input popup__input_type_card-url" name="description" type="text"
-                            required placeholder="Ссылка на картинку">
+                            minlength="1" maxlength="30" placeholder="Название места">
+                        <span class='popup__input-error' id='card-name-input-error'></span>
+                        <input class="popup__input popup__input_type_card-url" type="url" name="description" type="text"
+                            required  placeholder="Ссылка на картинку">
+                        <span class='popup__input-error' id='card-url-input-error'></span>
                         <button class="popup__button" type="submit">Создать</button>
                     </form>
                 </div>

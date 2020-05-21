@@ -1,5 +1,3 @@
-/* Спасибо за ревью, в первый раз не раскрыл окно с вашим общим обзором...*/
-
 /* buttons */
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = document.querySelector('.popup__close-button_type_edit-profile');
@@ -113,7 +111,6 @@ renderCards(loadCards(initialCards));
 function formEditProfileSubmitHandler (evt) {
   evt.preventDefault();
   profileName.textContent = profileNameInput.value
-  profileDescriptionInput.value = profileDescription.textContent;
   profileDescription.textContent = profileDescriptionInput.value;
   togglePopup(popupEditProfile);
 };
