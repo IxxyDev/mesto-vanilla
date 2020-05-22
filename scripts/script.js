@@ -141,7 +141,7 @@ function formEditProfileSubmitHandler (evt) {
   profileName.textContent = profileNameInput.value
   profileDescription.textContent = profileDescriptionInput.value;
   togglePopup(popupEditProfile);
-  checkImputBeforFormOpening(inputListEdit, formEditElement);
+  checkInput(inputListEdit, formEditElement);
   toggleButtonState(inputListEdit, saveButton, allForms);
 };
 
@@ -153,6 +153,8 @@ function formCreateCardSubmitHandler (evt) {
   })
   renderCards([newCard]);
   togglePopup(popupCreateCard);
+  checkInput(inputListCreateCard, formCreateCardElement);
+  toggleButtonState(inputListCreateCard, createCardButton, allForms);
 };
 
 function handleEditProfileButtonClick() {

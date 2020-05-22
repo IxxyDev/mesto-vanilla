@@ -36,10 +36,10 @@ const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
 };
     
 const checkInputValidity = (formElement, inputElement, inputErrorClass, errorClass) => {
-    if (!inputElement.validity.valid) { //если у инпута состояние валидности ложно
-      showInputError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass); //вызываем описанную ранее функцию отображения ошибки с тремя параметрам пар1 форма, пар2 инпут, пар3 сообщение валидации
+    if (!inputElement.validity.valid) { 
+      showInputError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass); 
     } else {
-      hideInputError(formElement, inputElement, inputErrorClass, errorClass); //иначе вызываем функцию убирающую сообщение об ошибке
+      hideInputError(formElement, inputElement, inputErrorClass, errorClass);
     }
 };
   
@@ -47,7 +47,6 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector, ina
     const inputList = Array.from(formElement.querySelectorAll(inputSelector));
     const buttonElement = formElement.querySelector(submitButtonSelector);
     toggleButtonState(inputList, buttonElement, inactiveButtonClass);
-  
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function () {
         toggleButtonState(inputList, buttonElement, inactiveButtonClass);
@@ -55,13 +54,7 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector, ina
       });
     });
 };
- 
-const refreshButtonState = (formElement, inputSelector, submitButtonSelector, inactiveButtonClass) => {
-    const inputList = Array.from(formElement.querySelectorAll(inputSelector));
-    const buttonElement = formElement.querySelector(submitButtonSelector);
-    toggleButtonState(inputList, buttonElement, inactiveButtonClass);
-};
-  
+   
 const enableValidation = ({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }) => {
     const formList = Array.from(document.querySelectorAll(formSelector));
     formList.forEach((formElement) => {
@@ -69,7 +62,6 @@ const enableValidation = ({ formSelector, inputSelector, submitButtonSelector, i
         evt.preventDefault();
       });
       setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass);
-  
     });
 };
 
