@@ -12,29 +12,29 @@ const showInputError = (formElement, inputElement, errorMessage, inputErrorClass
     inputElement.classList.add(inputErrorClass); 
     errorElement.textContent = errorMessage;
     errorElement.classList.add(errorClass);
-  };
+};
 
-const hasInvalidInput = (inputList) => {
-    return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-    })
-  };
-  
-const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
-    if (hasInvalidInput(inputList)) {
-      buttonElement.classList.add(inactiveButtonClass);
-      buttonElement.classList.remove(inactiveButtonClass);
-    }
-  }
-  
- 
-  const hideInputError = (formElement, inputElement, inputErrorClass, errorClass) => {
+const hideInputError = (formElement, inputElement, inputErrorClass, errorClass) => {
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.remove(inputErrorClass);
     errorElement.classList.remove(errorClass);
     errorElement.textContent = '';
 };
+
+const hasInvalidInput = (inputList) => {
+    return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+    })
+};
   
+const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
+    if (hasInvalidInput(inputList)) {
+      buttonElement.classList.add(inactiveButtonClass);
+    } else {
+      buttonElement.classList.remove(inactiveButtonClass);
+    }
+};
+    
 const checkInputValidity = (formElement, inputElement, inputErrorClass, errorClass) => {
     if (!inputElement.validity.valid) { //если у инпута состояние валидности ложно
       showInputError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass); //вызываем описанную ранее функцию отображения ошибки с тремя параметрам пар1 форма, пар2 инпут, пар3 сообщение валидации
