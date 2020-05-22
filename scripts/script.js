@@ -1,9 +1,8 @@
-/* Спасибо за ревью, в первый раз не раскрыл окно с вашим общим обзором...*/
-
 /* buttons */
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = document.querySelector('.popup__close-button_type_edit-profile');
 const createCardButton = document.querySelector('.profile__add-button');
+const saveButton = document.querySelector('.popup__button');
 const closeCreateCardButton = document.querySelector('.popup__close-button_type_new-card');
 const closeZoomedImageButton = document.querySelector('.popup__close-button_type_zoom-image');
 
@@ -22,12 +21,16 @@ const cardNameInput = document.querySelector('.popup__input_type_card-name');
 const cardUrlInput = document.querySelector('.popup__input_type_card-url');
 
 /* popups elements */
+const allPopups = document.querySelectorAll('.popup');
 const popupImage = document.querySelector('.popup_type_zoom-image')
 const popupFigcaption = document.querySelector('.popup__description');
 const popupZoomedImage = document.querySelector('.popup__zoom-image');
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const popupCreateCard = document.querySelector('.popup_type_add-new-card');
 
+/* input arrays */
+const inputListEdit = Array.from(formEditElement.querySelectorAll('.popup__text'));
+const inputListCreateCard = Array.from(formCreateCardElement.querySelectorAll('.popup__text'));
 /* content */
 const initialCards = [
   {
@@ -56,16 +59,31 @@ const initialCards = [
   },
 ];
 
+function checkInput(inputList, formElement) {
+  inputList.forEach((inputElement) => {
+      hideImputError(formElement, inputElement, inputErrorClass, errorClass);
+  });
+}
+
 /* Open and close popup */
 function togglePopup (popup) {
   popup.classList.toggle('popup_is-opened');
+  toggleEventListeners(popup);
 };
 
+function toggleEventListeners(popup) {
+  if (popup.classList.contains('popup_is-opened')) {
+      document.addEventListener('click', isPopupOpened);
+      document.addEventListener('keydown', isPopupOpened);
+  } else {
+      document.removeEventListener('click', isPopupOpened);
+      document.removeEventListener('keydown', isPopupOpened);
+  }
+};
 
 function toggleLikeStatus(evt) {
   evt.target.classList.toggle('element__like-button_active');
 };
-
 
 function openZoomedImg(evt) {
   popupZoomedImage.src = evt.target.src;
@@ -74,7 +92,6 @@ function openZoomedImg(evt) {
   togglePopup(popupImage);
 };
 
-
 function deleteCard(evt) {
   const element = evt.target.closest('.element');
   element.querySelector('.element__like-button').removeEventListener('click', toggleLikeStatus);
@@ -82,7 +99,6 @@ function deleteCard(evt) {
   element.querySelector('.element__image').removeEventListener('click', openZoomedImg);
   element.remove();
 };
-
 
 /* main app logix */
 function createCard(item) {
@@ -97,6 +113,17 @@ function createCard(item) {
   return cardElement;
 };
 
+function closePopup(evt, formElement) {
+  if ((evt.target.classList.contains('popup')) || (evt.key === 'Escape')) {
+      togglePopup(formElement);
+  }
+};
+
+function isPopupOpened(evt) {
+  const openedPopup = document.querySelector('.popup_is-opened');
+  closePopup(evt, openedPopup);
+};
+
 /* cards renedring */
 function loadCards(cards) {
   return cards.map((card) => createCard(card));
@@ -108,14 +135,14 @@ function renderCards(cards) {
 
 renderCards(loadCards(initialCards));
 
-
 /* Save data after editing + prep for submission */
 function formEditProfileSubmitHandler (evt) {
   evt.preventDefault();
   profileName.textContent = profileNameInput.value
-  profileDescriptionInput.value = profileDescription.textContent;
   profileDescription.textContent = profileDescriptionInput.value;
   togglePopup(popupEditProfile);
+  checkImputBeforFormOpening(inputListEdit, formEditElement);
+  toggleButtonState(inputListEdit, saveButton, allForms);
 };
 
 function formCreateCardSubmitHandler (evt) {
@@ -139,7 +166,6 @@ function handleCreateCardButtonClick() {
   cardUrlInput.value = '';
   togglePopup(popupCreateCard);
 };
-
 
 /* listeners */
 editButton.addEventListener('click', handleEditProfileButtonClick);
