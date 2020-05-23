@@ -61,18 +61,26 @@ const initialCards = [
 
 function checkInput(inputList, formElement) {
   inputList.forEach((inputElement) => {
-      hideError(formElement, inputElement, inputErrorClass, errorClass);
+      hideError(formElement, inputElement, allForms);
   });
 }
 
 /* Open and close popup */
 function togglePopup (popup) {
-  popup.classList.toggle('popup_is-opened');
+  if ((popup.classList.contains('popup_type_edit-profile')) && (!popup.classList.contains('popup_is-opened'))) {
+    checkInput(inputListEdit, formEditElement);
+    toggleButtonState(inputListEdit, saveButton, allForms);
+  }
+  if ((popup.classList.contains('popup_type_add-new-card')) && (!popup.classList.contains('popup_is-opened'))) {
+    checkInput(inputListCreateCard, formCreateCardElement);
+    toggleButtonState(inputListCreateCard, createCardButton, allForms);
+  }
   toggleEventListeners(popup);
+  popup.classList.toggle('popup_is-opened');
 };
 
 function toggleEventListeners(popup) {
-  if (popup.classList.contains('popup_is-opened')) {
+  if (!popup.classList.contains('popup_is-opened')) {
       document.addEventListener('click', isPopupOpened);
       document.addEventListener('keydown', isPopupOpened);
   } else {
@@ -122,6 +130,7 @@ function closePopup(evt, formElement) {
 function isPopupOpened(evt) {
   const openedPopup = document.querySelector('.popup_is-opened');
   closePopup(evt, openedPopup);
+  console.log(openedPopup);
 };
 
 /* cards renedring */
