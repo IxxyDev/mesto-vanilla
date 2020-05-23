@@ -61,7 +61,7 @@ const initialCards = [
 
 function checkInput(inputList, formElement) {
   inputList.forEach((inputElement) => {
-      hideImputError(formElement, inputElement, inputErrorClass, errorClass);
+      hideError(formElement, inputElement, inputErrorClass, errorClass);
   });
 }
 
