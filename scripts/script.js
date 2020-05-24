@@ -1,3 +1,7 @@
+/* Алексей, благодарю за ваше ревью! К сожалению, ввиду нехватки времени не успел исправить ваше замечание по разбиению логики togglePopup и toggleEventListeners. Все остальное поправил. Должен был предположить, что сроки проверки на границе дедлайна могут увеличиться...
+Понимание, почему это нужно и как это реализовать – есть. Обязуюсь (если пройду дальше) отрефакторить эту часть кода к следующему спринту. 
+
+
 /* buttons */
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = document.querySelector('.popup__close-button_type_edit-profile');
