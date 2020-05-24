@@ -1,4 +1,4 @@
-const allForms = {
+const formObject = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
@@ -62,4 +62,4 @@ const enableValidation = (object) => {
     });
 };
 
-enableValidation(allForms);
+enableValidation(formObject);

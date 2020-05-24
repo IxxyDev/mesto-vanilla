@@ -21,7 +21,6 @@ const cardNameInput = document.querySelector('.popup__input_type_card-name');
 const cardUrlInput = document.querySelector('.popup__input_type_card-url');
 
 /* popups elements */
-const allPopups = document.querySelectorAll('.popup');
 const popupImage = document.querySelector('.popup_type_zoom-image')
 const popupFigcaption = document.querySelector('.popup__description');
 const popupZoomedImage = document.querySelector('.popup__zoom-image');
@@ -61,7 +60,7 @@ const initialCards = [
 
 function checkInput(inputList, formElement) {
   inputList.forEach((inputElement) => {
-      hideError(formElement, inputElement, allForms);
+      hideError(formElement, inputElement, formObject);
   });
 }
 
@@ -69,11 +68,11 @@ function checkInput(inputList, formElement) {
 function togglePopup (popup) {
   if ((popup.classList.contains('popup_type_edit-profile')) && (!popup.classList.contains('popup_is-opened'))) {
     checkInput(inputListEdit, formEditElement);
-    toggleButtonState(inputListEdit, saveButton, allForms);
+    toggleButtonState(inputListEdit, saveButton, formObject);
   }
   if ((popup.classList.contains('popup_type_add-new-card')) && (!popup.classList.contains('popup_is-opened'))) {
     checkInput(inputListCreateCard, formCreateCardElement);
-    toggleButtonState(inputListCreateCard, createCardButton, allForms);
+    toggleButtonState(inputListCreateCard, createCardButton, formObject);
   }
   toggleEventListeners(popup);
   popup.classList.toggle('popup_is-opened');
@@ -81,11 +80,11 @@ function togglePopup (popup) {
 
 function toggleEventListeners(popup) {
   if (!popup.classList.contains('popup_is-opened')) {
-      document.addEventListener('click', isPopupOpened);
-      document.addEventListener('keydown', isPopupOpened);
+      document.addEventListener('mousedown', overlayPressClosePopup);
+      document.addEventListener('keydown', escPressClosePopup);
   } else {
-      document.removeEventListener('click', isPopupOpened);
-      document.removeEventListener('keydown', isPopupOpened);
+      document.removeEventListener('mousedown', overlayPressClosePopup);
+      document.removeEventListener('keydown', escPressClosePopup);
   }
 };
 
@@ -117,20 +116,27 @@ function createCard(item) {
   cardElement.querySelector('.element__title').textContent = item.name;
   cardElement.querySelector('.element__like-button').addEventListener('click', toggleLikeStatus);
   cardElement.querySelector('.element__delete-button').addEventListener('click', deleteCard);
-  cardElement.querySelector('.element__image').addEventListener('click', openZoomedImg);
+  cardElementImg.addEventListener('click', openZoomedImg);
   return cardElement;
 };
 
-function closePopup(evt, formElement) {
+function escPressClosePopup(evt) {
+  const openedPopup = document.querySelector('.popup_is-opened');
   if ((evt.target.classList.contains('popup')) || (evt.key === 'Escape')) {
-      togglePopup(formElement);
+      togglePopup(openedPopup);
+  }
+};
+
+const overlayPressClosePopup = (evt) => {
+  if (evt.target.classList.contains('popup')) {
+    const popup = evt.target.closest('.popup');
+    togglePopup(popup);
   }
 };
 
 function isPopupOpened(evt) {
   const openedPopup = document.querySelector('.popup_is-opened');
-  closePopup(evt, openedPopup);
-  console.log(openedPopup);
+  escPressClosePopup(evt, openedPopup);
 };
 
 /* cards renedring */
@@ -150,8 +156,7 @@ function formEditProfileSubmitHandler (evt) {
   profileName.textContent = profileNameInput.value
   profileDescription.textContent = profileDescriptionInput.value;
   togglePopup(popupEditProfile);
-  checkInput(inputListEdit, formEditElement);
-  toggleButtonState(inputListEdit, saveButton, allForms);
+  toggleButtonState(inputListEdit, saveButton, formObject);
 };
 
 function formCreateCardSubmitHandler (evt) {
@@ -162,8 +167,7 @@ function formCreateCardSubmitHandler (evt) {
   })
   renderCards([newCard]);
   togglePopup(popupCreateCard);
-  checkInput(inputListCreateCard, formCreateCardElement);
-  toggleButtonState(inputListCreateCard, createCardButton, allForms);
+  toggleButtonState(inputListCreateCard, createCardButton, formObject);
 };
 
 function handleEditProfileButtonClick() {
