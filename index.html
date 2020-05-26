@@ -33,7 +33,7 @@
                 <div class="popup__content">
                     <button class="popup__close-button popup__close-button_type_edit-profile" type="button"></button>
                     <h3 class="popup__title">Редактировать профиль</h3>
-                    <form class="popup__form popup__form_type_edit-profile">
+                    <form class="popup__form popup__form_type_edit-profile" novalidate>
                         <!--Deny name consisting from spaces, hyphens and their combinations-->
                         <input class="popup__input popup__input_type_name" name="name" type="text" id="name-input" required
                             minlength="2" maxlength="40" pattern="[a-zA-ZА-ЯЁа-яё\s\-]+[^\s\-]+">
@@ -41,7 +41,7 @@
                         <input class="popup__input popup__input_type_description" name="description" type="text" id="description-input"
                             required minlength="2" maxlength="200">
                         <span class='popup__input-error' id='description-input-error'></span>
-                        <button class="popup__button" type="submit">Сохранить</button>
+                        <button class="popup__button popup__button_type_save" type="submit">Сохранить</button>
                     </form>
                 </div>
             </section>
@@ -49,14 +49,14 @@
                 <div class="popup__content">
                     <button class="popup__close-button popup__close-button_type_new-card" type="button"></button>
                     <h3 class="popup__title">Новое место</h3>
-                    <form class="popup__form popup__form_type_new-card">
+                    <form class="popup__form popup__form_type_new-card" novalidate>
                         <input class="popup__input popup__input_type_card-name" name="name" type="text" id="card-name-input" required
                             minlength="1" maxlength="30" placeholder="Название места">
                         <span class='popup__input-error' id='card-name-input-error'></span>
                         <input class="popup__input popup__input_type_card-url" type="url" name="description" type="text" id="card-url-input"
-                            required  placeholder="Ссылка на картинку">
+                            required  placeholder="Ссылка на картинку" pattern=".+\.(jpg|png)">
                         <span class='popup__input-error' id='card-url-input-error'></span>
-                        <button class="popup__button" type="submit">Создать</button>
+                        <button class="popup__button popup__button_type_add" type="submit">Создать</button>
                     </form>
                 </div>
             </section>

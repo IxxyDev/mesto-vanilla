@@ -1,10 +1,10 @@
-/* Спасибо, не знал, что проверка позволяет так. Кажется, действительно позволяет. Прилигаю правки */
+/* Оказалось, что мое понимание было иллюзией. Спасибо, что вывернули наружу все мои недостатки и недопонимания. Ваши ревью заставили повозиться, какая-то доля озарения появилась.
+Исправил указанные вами ошибки, все работает правильно (наконец-то!). Единственное, пришлось написать костыльную ф-цию setButtonState для адекватного поведения дефолтных окон */
 
 /* buttons */
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = document.querySelector('.popup__close-button_type_edit-profile');
 const createCardButton = document.querySelector('.profile__add-button');
-const saveButton = document.querySelector('.popup__button');
 const closeCreateCardButton = document.querySelector('.popup__close-button_type_new-card');
 const closeZoomedImageButton = document.querySelector('.popup__close-button_type_zoom-image');
 
@@ -29,9 +29,6 @@ const popupZoomedImage = document.querySelector('.popup__zoom-image');
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const popupCreateCard = document.querySelector('.popup_type_add-new-card');
 
-/* input arrays */
-const inputListEdit = Array.from(formEditElement.querySelectorAll('.popup__text'));
-const inputListCreateCard = Array.from(formCreateCardElement.querySelectorAll('.popup__text'));
 /* content */
 const initialCards = [
   {
@@ -60,60 +57,46 @@ const initialCards = [
   },
 ];
 
-function checkInput(inputList, formElement) {
+function clearFormErrors(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
   inputList.forEach((inputElement) => {
-      hideError(formElement, inputElement, formObject);
+      hideInputError(formElement, inputElement, formObject);
   });
 };
 
-function checkButtonState (popup) {
-  if ((popup.classList.contains('popup_type_edit-profile')) && (!popup.classList.contains('popup_is-opened'))) {
-    checkInput(inputListEdit, formEditElement);
-    toggleButtonState(inputListEdit, saveButton, formObject);
-  }
-  if ((popup.classList.contains('popup_type_add-new-card')) && (!popup.classList.contains('popup_is-opened'))) {
-    checkInput(inputListCreateCard, formCreateCardElement);
-    toggleButtonState(inputListCreateCard, createCardButton, formObject);
-  }
-};
-
 function openPopup (popup) {
-  checkButtonState(popup);
-  removeEventListeners(popup);
-  popup.classList.toggle('popup_is-opened');
+  addEventListeners();
+  popup.classList.add('popup_is-opened');
 };
 
 function closePopup (popup) {
-  checkButtonState(popup);
-  addEventListeners(popup);
-  popup.classList.toggle('popup_is-opened')
+  clearFormErrors(popup);
+  removeEventListeners(popup);
+  popup.classList.remove('popup_is-opened')
 };
 
-function addEventListeners (popup) {
-  if (!popup.classList.contains('popup_is-opened')) {
-    document.addEventListener('mousedown', overlayPressClosePopup);
-    document.addEventListener('keydown', escPressClosePopup);
-  }
+function addEventListeners () {
+  document.addEventListener('mousedown', overlayPressClosePopup);
+  document.addEventListener('keydown', escPressClosePopup);
 };
 
 function escPressClosePopup (evt) {
   const openedPopup = document.querySelector('.popup_is-opened');
-  if ((evt.target.classList.contains('popup')) || (evt.key === 'Escape')) {
+  if (evt.key === 'Escape') {
       closePopup(openedPopup);
   }
 };
 
 function overlayPressClosePopup (evt) {
   if (evt.target.classList.contains('popup')) {
-    const popup = evt.target.closest('.popup');
-    closePopup(popup);
+    closePopup(evt.target);
   }
 };
 
 function removeEventListeners (popup) {
   if (popup.classList.contains('popup_is-opened')) {
-    document.removeEventListener('mousedown', overlayPressClosePopup);
-    document.removeEventListener('keydown', escPressClosePopup);
+    popup.removeEventListener('mousedown', overlayPressClosePopup);
+    popup.removeEventListener('keydown', escPressClosePopup);
   }
 };
 
@@ -166,7 +149,6 @@ function formEditProfileSubmitHandler (evt) {
   profileName.textContent = profileNameInput.value
   profileDescription.textContent = profileDescriptionInput.value;
   closePopup(popupEditProfile);
-  toggleButtonState(inputListEdit, saveButton, formObject);
 };
 
 function formCreateCardSubmitHandler (evt) {
@@ -177,19 +159,23 @@ function formCreateCardSubmitHandler (evt) {
   })
   renderCards([newCard]);
   closePopup(popupCreateCard);
-  toggleButtonState(inputListCreateCard, createCardButton, formObject);
 };
 
 function handleEditProfileButtonClick() {
   profileNameInput.value = profileName.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  closePopup(popupEditProfile);
+  const saveButton = document.querySelector('.popup__button_type_save');
+  clearFormErrors(formEditElement);
+  setButtonState(saveButton, formObject, true);
+  openPopup(popupEditProfile);
 };
 
 function handleCreateCardButtonClick() {
   cardNameInput.value = '';
   cardUrlInput.value = '';
-  closePopup(popupCreateCard);
+  const addButton = document.querySelector('.popup__button_type_add');
+  setButtonState(addButton, formObject, false);
+  openPopup(popupCreateCard);
 };
 
 /* listeners */
