@@ -1,6 +1,4 @@
-/* Алексей, благодарю за ваше ревью! К сожалению, ввиду нехватки времени не успел исправить ваше замечание по разбиению логики togglePopup и toggleEventListeners. Все остальное поправил. Должен был предположить, что сроки проверки на границе дедлайна могут увеличиться...
-Понимание, почему это нужно и как это реализовать – есть. Обязуюсь (если пройду дальше) отрефакторить эту часть кода к следующему спринту. 
-
+/* Спасибо, не знал, что проверка позволяет так. Кажется, действительно позволяет. Прилигаю правки */
 
 /* buttons */
 const editButton = document.querySelector('.profile__edit-button');
@@ -66,10 +64,9 @@ function checkInput(inputList, formElement) {
   inputList.forEach((inputElement) => {
       hideError(formElement, inputElement, formObject);
   });
-}
+};
 
-/* Open and close popup */
-function togglePopup (popup) {
+function checkButtonState (popup) {
   if ((popup.classList.contains('popup_type_edit-profile')) && (!popup.classList.contains('popup_is-opened'))) {
     checkInput(inputListEdit, formEditElement);
     toggleButtonState(inputListEdit, saveButton, formObject);
@@ -78,17 +75,45 @@ function togglePopup (popup) {
     checkInput(inputListCreateCard, formCreateCardElement);
     toggleButtonState(inputListCreateCard, createCardButton, formObject);
   }
-  toggleEventListeners(popup);
+};
+
+function openPopup (popup) {
+  checkButtonState(popup);
+  removeEventListeners(popup);
   popup.classList.toggle('popup_is-opened');
 };
 
-function toggleEventListeners(popup) {
+function closePopup (popup) {
+  checkButtonState(popup);
+  addEventListeners(popup);
+  popup.classList.toggle('popup_is-opened')
+};
+
+function addEventListeners (popup) {
   if (!popup.classList.contains('popup_is-opened')) {
-      document.addEventListener('mousedown', overlayPressClosePopup);
-      document.addEventListener('keydown', escPressClosePopup);
-  } else {
-      document.removeEventListener('mousedown', overlayPressClosePopup);
-      document.removeEventListener('keydown', escPressClosePopup);
+    document.addEventListener('mousedown', overlayPressClosePopup);
+    document.addEventListener('keydown', escPressClosePopup);
+  }
+};
+
+function escPressClosePopup (evt) {
+  const openedPopup = document.querySelector('.popup_is-opened');
+  if ((evt.target.classList.contains('popup')) || (evt.key === 'Escape')) {
+      closePopup(openedPopup);
+  }
+};
+
+function overlayPressClosePopup (evt) {
+  if (evt.target.classList.contains('popup')) {
+    const popup = evt.target.closest('.popup');
+    closePopup(popup);
+  }
+};
+
+function removeEventListeners (popup) {
+  if (popup.classList.contains('popup_is-opened')) {
+    document.removeEventListener('mousedown', overlayPressClosePopup);
+    document.removeEventListener('keydown', escPressClosePopup);
   }
 };
 
@@ -96,14 +121,14 @@ function toggleLikeStatus(evt) {
   evt.target.classList.toggle('element__like-button_active');
 };
 
-function openZoomedImg(evt) {
+function openZoomedImg (evt) {
   popupZoomedImage.src = evt.target.src;
   popupZoomedImage.alt = evt.target.alt;
   popupFigcaption.textContent = evt.target.alt;
-  togglePopup(popupImage);
+  openPopup(popupImage);
 };
 
-function deleteCard(evt) {
+function deleteCard (evt) {
   const element = evt.target.closest('.element');
   element.querySelector('.element__like-button').removeEventListener('click', toggleLikeStatus);
   element.querySelector('.element__delete-button').removeEventListener('click', deleteCard);
@@ -111,8 +136,8 @@ function deleteCard(evt) {
   element.remove();
 };
 
-/* main app logix */
-function createCard(item) {
+
+function createCard (item) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardElementImg = cardElement.querySelector('.element__image');
   cardElementImg.src = item.link;
@@ -122,25 +147,6 @@ function createCard(item) {
   cardElement.querySelector('.element__delete-button').addEventListener('click', deleteCard);
   cardElementImg.addEventListener('click', openZoomedImg);
   return cardElement;
-};
-
-function escPressClosePopup(evt) {
-  const openedPopup = document.querySelector('.popup_is-opened');
-  if ((evt.target.classList.contains('popup')) || (evt.key === 'Escape')) {
-      togglePopup(openedPopup);
-  }
-};
-
-const overlayPressClosePopup = (evt) => {
-  if (evt.target.classList.contains('popup')) {
-    const popup = evt.target.closest('.popup');
-    togglePopup(popup);
-  }
-};
-
-function isPopupOpened(evt) {
-  const openedPopup = document.querySelector('.popup_is-opened');
-  escPressClosePopup(evt, openedPopup);
 };
 
 /* cards renedring */
@@ -159,7 +165,7 @@ function formEditProfileSubmitHandler (evt) {
   evt.preventDefault();
   profileName.textContent = profileNameInput.value
   profileDescription.textContent = profileDescriptionInput.value;
-  togglePopup(popupEditProfile);
+  closePopup(popupEditProfile);
   toggleButtonState(inputListEdit, saveButton, formObject);
 };
 
@@ -170,27 +176,27 @@ function formCreateCardSubmitHandler (evt) {
     link: cardUrlInput.value,
   })
   renderCards([newCard]);
-  togglePopup(popupCreateCard);
+  closePopup(popupCreateCard);
   toggleButtonState(inputListCreateCard, createCardButton, formObject);
 };
 
 function handleEditProfileButtonClick() {
   profileNameInput.value = profileName.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  togglePopup(popupEditProfile);
+  closePopup(popupEditProfile);
 };
 
 function handleCreateCardButtonClick() {
   cardNameInput.value = '';
   cardUrlInput.value = '';
-  togglePopup(popupCreateCard);
+  closePopup(popupCreateCard);
 };
 
 /* listeners */
 editButton.addEventListener('click', handleEditProfileButtonClick);
 createCardButton.addEventListener('click', handleCreateCardButtonClick);
-closeEditButton.addEventListener('click', (evt) => togglePopup(popupEditProfile));
-closeCreateCardButton.addEventListener('click', (evt) => togglePopup(popupCreateCard));
+closeEditButton.addEventListener('click', (evt) => closePopup(popupEditProfile));
+closeCreateCardButton.addEventListener('click', (evt) => closePopup(popupCreateCard));
 formEditElement.addEventListener('submit', formEditProfileSubmitHandler);
 formCreateCardElement.addEventListener('submit', formCreateCardSubmitHandler);
-closeZoomedImageButton.addEventListener('click', (evt) => togglePopup(popupImage)); 
+closeZoomedImageButton.addEventListener('click', (evt) => closePopup(popupImage));
