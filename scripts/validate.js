@@ -30,12 +30,12 @@ const hasInvalidInput = (inputList) => {
 const setButtonState = (buttonElement, object, boolean) => {
   if (boolean === true) {
     buttonElement.classList.remove(object.inactiveButtonClass);
-    buttonElement.removeAttribute("disabled", "");
+    buttonElement.removeAttribute("disabled");
   }
 
   if (boolean === false) {
     buttonElement.classList.add(object.inactiveButtonClass);
-    buttonElement.setAttribute("disabled", "");
+    buttonElement.setAttribute("disabled", true);
   }
 };
 
