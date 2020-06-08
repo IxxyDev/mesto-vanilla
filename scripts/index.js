@@ -1,4 +1,5 @@
-
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
 /* buttons */
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = document.querySelector('.popup__close-button_type_edit-profile');
@@ -21,13 +22,22 @@ const cardNameInput = document.querySelector('.popup__input_type_card-name');
 const cardUrlInput = document.querySelector('.popup__input_type_card-url');
 
 /* popups elements */
-const popupImage = document.querySelector('.popup_type_zoom-image')
-const popupFigcaption = document.querySelector('.popup__description');
-const popupZoomedImage = document.querySelector('.popup__zoom-image');
+export const popupImage = document.querySelector('.popup_type_zoom-image')
+export const popupFigcaption = document.querySelector('.popup__description');
+export const popupZoomedImage = document.querySelector('.popup__zoom-image');
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const popupCreateCard = document.querySelector('.popup_type_add-new-card');
 
 /* content */
+const formObject = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+};
+
 const initialCards = [
   {
       name: 'Архыз',
@@ -62,7 +72,7 @@ function clearFormErrors(formElement) {
   });
 };
 
-function openPopup (popup) {
+export function openPopup (popup) {
   addEventListeners();
   popup.classList.add('popup_is-opened');
 };
@@ -184,3 +194,10 @@ closeCreateCardButton.addEventListener('click', () => closePopup(popupCreateCard
 formEditElement.addEventListener('submit', formEditProfileSubmitHandler);
 formCreateCardElement.addEventListener('submit', formCreateCardSubmitHandler);
 closeZoomedImageButton.addEventListener('click', () => closePopup(popupImage));
+
+
+const formList = Array.from(document.querySelectorAll(formObject.formSelector));
+formList.forEach((formElement) => {
+  const formValid = new FormValidator(formElement, formObject);
+  formValid.enableValidation();
+});
