@@ -179,8 +179,8 @@ function handleCreateCardButtonClick() {
 /* listeners */
 editButton.addEventListener('click', handleEditProfileButtonClick);
 createCardButton.addEventListener('click', handleCreateCardButtonClick);
-closeEditButton.addEventListener('click', (evt) => closePopup(popupEditProfile));
-closeCreateCardButton.addEventListener('click', (evt) => closePopup(popupCreateCard));
+closeEditButton.addEventListener('click', () => closePopup(popupEditProfile));
+closeCreateCardButton.addEventListener('click', () => closePopup(popupCreateCard));
 formEditElement.addEventListener('submit', formEditProfileSubmitHandler);
 formCreateCardElement.addEventListener('submit', formCreateCardSubmitHandler);
-closeZoomedImageButton.addEventListener('click', (evt) => closePopup(popupImage));
+closeZoomedImageButton.addEventListener('click', () => closePopup(popupImage));
