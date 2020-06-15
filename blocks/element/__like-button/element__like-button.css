@@ -7,6 +7,7 @@
     width: 21px;
     height: 18px;
     border: none;
+    outline: none;
 }
 
 .element__like-button:hover {
