@@ -1,5 +1,3 @@
-import { popupImage, popupFigcaption, popupZoomedImage, openPopup } from './index.js'
-
 export default class Card {
     constructor(item, templateSelector) {
         this._link = item.link;
@@ -44,9 +42,12 @@ export default class Card {
     }
 
     _openZoomedImg (evt) {
+        const popupImage = document.querySelector('.popup_type_zoom-image');
+        const popupFigcaption = document.querySelector('.popup__description');
+        const popupZoomedImage = document.querySelector('.popup__zoom-image');
         popupZoomedImage.src = evt.target.src;
         popupZoomedImage.alt = evt.target.alt;
         popupFigcaption.textContent = evt.target.alt;
-        openPopup(popupImage);
+        popupImage.classList.add('popup_is-opened');
       }
 }
