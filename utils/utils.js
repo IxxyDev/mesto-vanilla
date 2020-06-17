@@ -1,3 +1,5 @@
+//Распространил логику конфига на все элементы страницы. Вероятно, понадобится в будущем
+
 export const popupConfig = {
     popupSelector: '.popup',
     formSelector: '.popup__form',

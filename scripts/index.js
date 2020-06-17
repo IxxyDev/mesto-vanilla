@@ -1,9 +1,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
-/* buttons */
-const editButton = document.querySelector('.profile__edit-button');
-const createCardButton = document.querySelector('.profile__add-button');
+import { popupConfig, validationConfig, cardConfig, initialCards } from '../utils/utils.js';
 
 
 /* blocks and templates */
@@ -37,34 +35,11 @@ function clearFormErrors(formElement) {
   });
 }
 
-/*export function openPopup (popup) {
-  addEventListeners();
-  popup.classList.add('popup_is-opened');
-}
-
-function closePopup (popup) {
-  removeEventListeners(popup);
-  popup.classList.remove('popup_is-opened');
-}
-*/
 const resetButtonState = (formElement) => {
   const submitButton = formElement.querySelector(validationConfig.submitButtonSelector);
   submitButton.disabled = true;
   submitButton.classList.add(validationConfig.inactiveButtonClass);
 }
-
-/*function addEventListeners () {
-  document.addEventListener('mousedown', overlayPressClosePopup);
-  document.addEventListener('keydown', escPressClosePopup);
-}
-
-function escPressClosePopup (evt) {
-  const openedPopup = document.querySelector('.popup_is-opened');
-  if (evt.key === 'Escape') {
-      closePopup(openedPopup);
-  }
-}
-*/
 
 function overlayPressClosePopup (evt) {
   if (evt.target.classList.contains('popup')) {
