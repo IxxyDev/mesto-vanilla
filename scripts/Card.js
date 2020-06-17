@@ -40,14 +40,4 @@ export default class Card {
         element.querySelector('.element__image').removeEventListener('click', this._openZoomedImg);
         element.remove();
     }
-
-    _openZoomedImg (evt) {
-        const popupImage = document.querySelector('.popup_type_zoom-image');
-        const popupFigcaption = document.querySelector('.popup__description');
-        const popupZoomedImage = document.querySelector('.popup__zoom-image');
-        popupZoomedImage.src = evt.target.src;
-        popupZoomedImage.alt = evt.target.alt;
-        popupFigcaption.textContent = evt.target.alt;
-        popupImage.classList.add('popup_is-opened');
-      }
 }

@@ -1,7 +1,7 @@
 import Popup from './Popup.js';
 import { popupConfig, validationConfig } from '../utils/utils.js';
 
-//Реализацию с fillInputs (для двух разных форм) подсказали в slack((
+//Реализацию с fillInputs (для двух разных экземпляров класса/форм) подсказали в slack((
 export default class PopupWithForm extends Popup {
     constructor(popupSelector, { handleFormSubmit, fillInputs }) {
         super(popupSelector);
