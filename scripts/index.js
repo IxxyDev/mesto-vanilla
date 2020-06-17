@@ -2,6 +2,7 @@
 
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import Section from './Section.js';
 /* buttons */
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = document.querySelector('.popup__close-button_type_edit-profile');
@@ -15,6 +16,7 @@ const formCreateCardElement = document.querySelector('.popup__form_type_new-card
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const cardsContainer = document.querySelector('.elements');
+const cardContainer = '.elements';
 
 /* inputs */
 const profileNameInput = document.querySelector('.popup__input_type_name');
@@ -117,13 +119,6 @@ function removeEventListeners (popup) {
   }
 }
 
-/* cards renedring */
-initialCards.forEach((item) => {
-  const card = new Card(item, '#card');
-	const cardElement = card.createCard();
-	cardsContainer.append(cardElement);
-})
-
 /* Save data after editing + prep for submission */
 function formEditProfileSubmitHandler (evt) {
   evt.preventDefault();
@@ -159,8 +154,8 @@ function handleCreateCardButtonClick() {
 }
 
 const enableValidation = (validationConfig, templateSelector) => {
-  const addCardValidation = new FormValidator(validationConfig, templateSelector);
-  return addCardValidation.enableValidation();
+  const validator = new FormValidator(validationConfig, templateSelector);
+  return validator.enableValidation();
 }
 
 /* listeners */
@@ -175,3 +170,15 @@ closeZoomedImageButton.addEventListener('click', () => closePopup(popupImage));
 popupForms.forEach((popupForm) => {
   enableValidation(validationConfig, popupForm);
 })
+
+
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item, '#card');
+    const cardElement = card.createCard();
+    cardList.addItem(cardElement);
+  },
+}, cardContainer);
+
+cardList.renderCards();
