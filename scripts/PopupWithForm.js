@@ -1,5 +1,5 @@
 import Popup from './Popup.js';
-import { popupConfig, validationConfig } from '../utils/utils.js';
+import { popupConfig, validationConfig } from '../utils/constants.js';
 
 //Реализацию с fillInputs (для двух разных экземпляров класса/форм) подсказали в slack((
 export default class PopupWithForm extends Popup {
@@ -41,7 +41,7 @@ export default class PopupWithForm extends Popup {
     }
 
     close() {
-        this.popupSelector.querySelector(popupConfig.formSelector).reset();
+        this._popupSelector.querySelector(popupConfig.formSelector).reset();
         super.close();
     }
 }

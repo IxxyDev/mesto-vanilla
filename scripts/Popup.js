@@ -21,7 +21,7 @@ export default class Popup {
     }
 
     setEventListeners() {
-        this.popupSelector.addEventListener('click', (evt) => {this._handleClickClose(evt)});
+        this._popupSelector.addEventListener('click', (evt) => {this._handleClickClose(evt)});
         this._popupSelector.addEventListener('keyup', (evt) => {this._handleEscClose(evt)});
     }
 

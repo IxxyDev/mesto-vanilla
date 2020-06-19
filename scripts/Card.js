@@ -1,7 +1,10 @@
+import { cardConfig } from '../utils/constants.js';
+
 export default class Card {
-    constructor(item, templateSelector) {
+    constructor({ item, handleCardClick }, templateSelector) {
         this._link = item.link;
         this._name = item.name;
+        this._handleCardClick = handleCardClick;
         this._templateSelector = templateSelector;
     }
 
@@ -10,34 +13,28 @@ export default class Card {
             .querySelector(this._templateSelector)
             .content.querySelector('.element')
             .cloneNode(true);
-        this._element = cardElement;
+        return cardElement;
+    }
+
+    _setEventlisteners() {
+        this._element.querySelector(cardConfig.cardDeleteSelector).addEventListener('click', this._deleteCard());
+        this._element.querySelector(cardConfig.cardLikeSelector).addEventListener('click', this._toggleLikeStatus());
+        this._element.querySelector(cardConfig.cardImgSelector).addEventListener('click', this._handleCardClick());
     }
 
     createCard() {
-        this._getTemplate();
-        const elementTitle = this._element.querySelector('.element__title');
-        const elementImg = this._element.querySelector('.element__image');
-        elementTitle.textContent = this._name;
-        elementImg.src = this._link;
-        elementImg.alt = this._name;
-
-        const likeButton = this._element.querySelector('.element__like-button');
-        const deleteButton = this._element.querySelector('.element__delete-button');
-        deleteButton.addEventListener('click', this._deleteCard);
-        likeButton.addEventListener('click', this._toggleLikeStatus);
-        elementImg.addEventListener('click', this._openZoomedImg);
+        this._element = this._getTemplate();
+        this._setEventlisteners();
+        this._element.querySelector(cardConfig.cardImgSelector).src = this._link;
+        this._element.querySelector(cardConfig.cardTitleSelector).alt = this._name;
         return this._element;
     }
 
-    _toggleLikeStatus(evt) {
-        evt.target.classList.toggle('element__like-button_active');
+    _toggleLikeStatus() {
+        this._element.querySelector(cardConfig.cardLikeSelector).classList.toggle('element__like-button_active');
     }
 
-    _deleteCard (evt) {
-        const element = evt.target.closest('.element');
-        element.querySelector('.element__like-button').removeEventListener('click', this._toggleLikeStatus);
-        element.querySelector('.element__delete-button').removeEventListener('click', this._deleteCard);
-        element.querySelector('.element__image').removeEventListener('click', this._openZoomedImg);
-        element.remove();
+    _deleteCard() {
+        this._element.remove();
     }
 }
