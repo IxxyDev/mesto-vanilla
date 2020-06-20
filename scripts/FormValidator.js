@@ -29,19 +29,19 @@ export default class FormValidator {
   }
 
   _setButtonState(isValid) {
-    if (isValid === false) {
+    if (isValid === true) {
       this._submitButton.classList.remove(this._inactiveButtonClass);
       this._submitButton.disabled = false;
     }
 
-    if (isValid === true) {
+    if (isValid === false) {
       this._submitButton.classList.add(this._inactiveButtonClass);
       this._submitButton.disabled = true;
     }
   }
 
   _toggleButtonState() {
-    this._setButtonState(this._hasInvalidInput());
+    this._setButtonState(!this._hasInvalidInput());
   }
     
   _checkInputValidity(inputElement) {
@@ -61,11 +61,11 @@ export default class FormValidator {
     });
   }
 
-  clearFormErrors() {
+  clearFormErrors(isProfile) {
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
-    this._setButtonState(false);
+    isProfile ? this._setButtonState(true) : this._setButtonState(false);
   } 
    
   enableValidation() {

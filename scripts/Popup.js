@@ -13,6 +13,7 @@ export default class Popup {
         });
         this._closeButton.addEventListener('click', () => this.close(), { once: true });
     }
+    
     open() {
         this._setEventListeners()
         this._popup.classList.add('popup_is-opened');
