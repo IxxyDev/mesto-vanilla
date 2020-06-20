@@ -8,6 +8,7 @@ export const popupConfig = {
     popupZoomedImgSelector: '.popup_type_zoom-image',
     popupImgSelector: '.popup__zoom-image',
     popupFigcaptionSelector: '.popup__description',
+    inputSelector: '.popup__input',
     inputNameSelector: '.popup__input_type_name',
     inputDescriptionSelector: '.popup__input_type_description',
     submitButtonSelector: '.popup__button'
@@ -42,14 +43,15 @@ export const profileConfig = {
 
 export const editProfilePopup = document.querySelector(popupConfig.popupEditProfileSelector);
 export const createCardPopup = document.querySelector(popupConfig.popupCreateCardSelector);
+export const editButton = document.querySelector(profileConfig.editButtonSelector);
+export const addButton = document.querySelector(profileConfig.addButtonSelector);
+export const popupForms = Array.from(document.querySelectorAll(popupConfig.formSelector));
 
 export const profileName = editProfilePopup.querySelector(popupConfig.inputNameSelector);
 export const profileDescription = editProfilePopup.querySelector(popupConfig.inputDescriptionSelector);
-export const editButton = editProfilePopup.querySelector(popupConfig.submitButtonSelector);
-export const addCardName = createCardPopup.querySelector(popupConfig.inputNameSelector);
+export const addCardName = document.querySelector(popupConfig.inputNameSelector);
 export const addCardUrl = createCardPopup.querySelector(popupConfig.inputDescriptionSelector);
-export const addButton = createCardPopup.querySelector(popupConfig.submitButtonSelector);
-export const popupForms = Array.from(document.querySelectorAll(popupConfig.formSelector));
+
 
 export const initialCards = [
     {

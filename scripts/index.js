@@ -16,61 +16,57 @@ import {
   addCardUrl,
   profileName,
   profileDescription,
-  popupForms,
-  profileConfig
+  profileConfig,
+  editProfilePopup,
+  createCardPopup
 } from '../utils/constants.js';
+const popupImg = new PopupWithImage(popupConfig.popupZoomedImgSelector);
 
-const enableValidation = (validationConfig, templateSelector) => {
-  const validator = new FormValidator(validationConfig, templateSelector);
-  return validator.enableValidation();
+const generateCard = (item) => {
+  const newCard = new Card({
+    data: item,
+    handleCardClick: popupImg.open.bind(popupImg),
+  }, cardConfig.cardSelector);
+  return newCard.createCard();
 }
 
-popupForms.forEach((popupForm) => {
-  enableValidation(validationConfig, popupForm);
-})
+const userInfo = new UserInfo({
+  name: profileConfig.nameSelector,
+  description: profileConfig.descriptionSelector
+});
 
 const cardList = new Section({
   items: initialCards,
-  renderer: (item) => {
-    const card = new Card({
-      item,
-      handleCardClick: (evt) => {
-        const popupImg = new PopupWithImage(item, popupConfig.popupZoomedImgSelector);
-        popupImg.open(evt);
-        }, 
-      }, cardConfig.cardSelector);
-        const cardElement = card.createCard();
-        cardList.addItem(cardElement);
-    },
-  }, cardConfig.cardsContainerSelector
+  renderer: (card) => {
+    cardList.addItem(generateCard(card));
+  },
+}, cardConfig.cardsContainerSelector,
 );
 
 cardList.renderCards();
 
 const addCardPopup = new PopupWithForm(popupConfig.popupCreateCardSelector, {
-  handleFormSubmit: (cardItem) => {
+  handleFormSubmit: (card) => {
     const cardSection = new Section({
-      items: cardItem,
+      items: [card], //array because of forEach fucntion in Section
       renderer: (item) => {
-        const card = new Card({
-          item,
-          handleCardClick: (evt) => {
-            const popupImg = new PopupWithImage(item, popupConfig.popupZoomedImgSelector);
-            popupImg.open(evt);
-          },
-        }, cardConfig.cardSelector);
-        const cardElement = card.createCard();
-        cardSection.addItem(cardElement);
-      },
-    }, cardConfig.cardsContainerSelector);
+        cardSection.addItem(generateCard(item), true);
+        }, 
+      }, cardConfig.cardsContainerSelector);
+      console.log(cardSection);
     cardSection.renderCards();
     addCardPopup.close();
   },
 
-  fillInputs: () => {
+  setInputs: () => {
     addCardName.value = '';
     addCardUrl.value = '';
   },
+  
+  resetValidation: () => {
+    formValidationAddCard.clearFormErrors();
+  },
+
 });
 
 const editPopup = new PopupWithForm(popupConfig.popupEditProfileSelector, {
@@ -79,17 +75,22 @@ const editPopup = new PopupWithForm(popupConfig.popupEditProfileSelector, {
     editPopup.close();
   },
 
-  fillInputs: () => {
+  setInputs: () => {
     profileName.value = userInfo.getUsersInfo().name;
     profileDescription.value = userInfo.getUsersInfo().description;
-  }
-});
+  },
 
-const userInfo = new UserInfo ({
-  name: profileConfig.nameSelector,
-  description: profileConfig.descriptionSelector
+  resetValidation: () => {
+    formValidationEdit.clearFormErrors();
+  },
 });
 
 // listeners
-editButton.addEventListener('click', editPopup.open());
-addButton.addEventListener('click', addCardPopup.open());
+editButton.addEventListener('click', () => editPopup.open());
+addButton.addEventListener('click', () => addCardPopup.open());
+const formValidationAddCard = new FormValidator(validationConfig, createCardPopup);
+const formValidationEdit = new FormValidator(validationConfig, editProfilePopup);
+const validationClassArray = [formValidationAddCard, formValidationEdit];
+validationClassArray.forEach((validationElement) => {
+  validationElement.enableValidation();
+});
