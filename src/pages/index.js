@@ -52,7 +52,7 @@ const cardList = new Section(
   {
     items: initialCards,
     renderer: (card) => {
-      cardList.addItem(generateCard(card));
+      cardList.addItem(generateCard(card)); //undefined is falsy, so did not include second parameter "false"
     },
   },
   cardConfig.cardsContainerSelector
@@ -78,17 +78,16 @@ const editPopup = new PopupWithForm(popupConfig.popupEditProfileSelector, {
 });
 
 const addCardPopup = new PopupWithForm(popupConfig.popupCreateCardSelector, {
-  handleFormSubmit: (card) => {
+  handleFormSubmit: ([name, link]) => {
     const cardSection = new Section(
       {
-        items: [card], //array because of forEach fucntion in Section
+        items: [{ name, link }], //array because of forEach fucntion in Section
         renderer: (item) => {
           cardSection.addItem(generateCard(item), true);
         },
       },
       cardConfig.cardsContainerSelector
     );
-    console.log(cardSection);
     cardSection.renderCards();
     addCardPopup.close();
   },
@@ -103,7 +102,7 @@ const addCardPopup = new PopupWithForm(popupConfig.popupCreateCardSelector, {
   },
 });
 
-//enable validation, obviously)
+//enable validation, obviously
 formsValidation.forEach((form) => {
   form.enableValidation();
 });

@@ -1,4 +1,4 @@
-//Распространил логику конфига на все элементы страницы. Вероятно, понадобится в будущем
+//I guess this config logix can be useful in future
 
 export const popupConfig = {
   popupSelector: '.popup',

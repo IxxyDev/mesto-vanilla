@@ -14,7 +14,6 @@ export default class Section {
   }
 
   renderCards() {
-    console.log(typeof this._renderedItems);
     this._renderedItems.forEach((item) => {
       this._renderer(item);
     });
