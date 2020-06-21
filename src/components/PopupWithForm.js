@@ -1,5 +1,3 @@
-// реализацию этого блока подсказали в Slack
-
 import Popup from './Popup.js';
 import { popupConfig } from '../utils/constants.js';
 
