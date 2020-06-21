@@ -19,7 +19,9 @@
   "homepage": "https://github.com/IxxyDev/mesto#readme",
   "dependencies": {
     "core-js": "^3.6.5",
-    "corejs": "^1.0.0"
+    "corejs": "^1.0.0",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
