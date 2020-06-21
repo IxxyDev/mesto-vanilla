@@ -7,10 +7,10 @@ import UserInfo from '../components/UserInfo.js';
 import PopupWithForm from '../components/PopupWithForm';
 import PopupWithImage from '../components/PopupWithImage';
 
-import { 
-  popupConfig, 
-  validationConfig, 
-  cardConfig, 
+import {
+  popupConfig,
+  validationConfig,
+  cardConfig,
   initialCards,
   addButton,
   editButton,
@@ -20,35 +20,42 @@ import {
   profileDescription,
   profileConfig,
   editProfilePopup,
-  createCardPopup
+  createCardPopup,
 } from '../utils/constants.js';
 
 //instances
 const popupImg = new PopupWithImage(popupConfig.popupZoomedImgSelector);
 const userInfo = new UserInfo({
   name: profileConfig.nameSelector,
-  description: profileConfig.descriptionSelector
+  description: profileConfig.descriptionSelector,
 });
 const addCardValidation = new FormValidator(validationConfig, createCardPopup);
-const editProfileValdiation = new FormValidator(validationConfig, editProfilePopup);
+const editProfileValdiation = new FormValidator(
+  validationConfig,
+  editProfilePopup
+);
 const formsValidation = [editProfileValdiation, addCardValidation];
-
 
 //card generation logix
 const generateCard = (item) => {
-  const newCard = new Card({
-    data: item,
-    handleCardClick: popupImg.open.bind(popupImg),
-  }, cardConfig.cardSelector);
+  const newCard = new Card(
+    {
+      data: item,
+      handleCardClick: popupImg.open.bind(popupImg),
+    },
+    cardConfig.cardSelector
+  );
   return newCard.createCard();
-}
+};
 
-const cardList = new Section({
-  items: initialCards,
-  renderer: (card) => {
-    cardList.addItem(generateCard(card));
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: (card) => {
+      cardList.addItem(generateCard(card));
+    },
   },
-}, cardConfig.cardsContainerSelector,
+  cardConfig.cardsContainerSelector
 );
 
 cardList.renderCards();
@@ -72,13 +79,16 @@ const editPopup = new PopupWithForm(popupConfig.popupEditProfileSelector, {
 
 const addCardPopup = new PopupWithForm(popupConfig.popupCreateCardSelector, {
   handleFormSubmit: (card) => {
-    const cardSection = new Section({
-      items: [card], //array because of forEach fucntion in Section
-      renderer: (item) => {
-        cardSection.addItem(generateCard(item), true);
-        }, 
-      }, cardConfig.cardsContainerSelector);
-      console.log(cardSection);
+    const cardSection = new Section(
+      {
+        items: [card], //array because of forEach fucntion in Section
+        renderer: (item) => {
+          cardSection.addItem(generateCard(item), true);
+        },
+      },
+      cardConfig.cardsContainerSelector
+    );
+    console.log(cardSection);
     cardSection.renderCards();
     addCardPopup.close();
   },
@@ -87,12 +97,11 @@ const addCardPopup = new PopupWithForm(popupConfig.popupCreateCardSelector, {
     addCardName.value = '';
     addCardUrl.value = '';
   },
-  
+
   resetValidation: () => {
     addCardValidation.clearFormErrors(false);
   },
 });
-
 
 //enable validation, obviously)
 formsValidation.forEach((form) => {
