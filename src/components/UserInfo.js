@@ -5,10 +5,10 @@ export default class UserInfo {
   }
 
   getUsersInfo() {
-    return (this._userInfo = {
+    return {
       name: this._name.textContent,
       description: this._description.textContent,
-    });
+    };
   }
 
   setUserInfo(user) {

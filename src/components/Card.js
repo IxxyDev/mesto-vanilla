@@ -27,7 +27,7 @@ export default class Card {
     this._element.closest('.element').remove();
   }
 
-  _setEventlisteners() {
+  _setEventListeners() {
     this._element
       .querySelector(cardConfig.cardDeleteSelector)
       .addEventListener('click', () => this._deleteCard());
@@ -41,7 +41,7 @@ export default class Card {
 
   createCard() {
     this._element = this._getTemplate();
-    this._setEventlisteners();
+    this._setEventListeners();
     this._element.querySelector(cardConfig.cardImgSelector).src = this._link;
     this._element.querySelector(cardConfig.cardImgSelector).alt = this._name;
     this._element.querySelector(

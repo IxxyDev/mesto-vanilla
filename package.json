@@ -18,10 +18,7 @@
   },
   "homepage": "https://github.com/IxxyDev/mesto#readme",
   "dependencies": {
-    "core-js": "^3.6.5",
-    "corejs": "^1.0.0",
-    "husky": "^4.2.5",
-    "prettier": "^2.0.5"
+    "core-js": "^3.6.5"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
@@ -37,7 +34,9 @@
     "postcss-loader": "^3.0.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5"
   },
   "husky": {
     "hooks": {

@@ -1,3 +1,6 @@
+/*Мне тоже показалось странным помещение husky и prettier в dependencies (работали в Nuxt.js для РакЛечится, ментор
+подключал именно так)*/
+
 import './index.css';
 
 import Card from '../components/Card.js';
@@ -30,18 +33,18 @@ const userInfo = new UserInfo({
   description: profileConfig.descriptionSelector,
 });
 const addCardValidation = new FormValidator(validationConfig, createCardPopup);
-const editProfileValdiation = new FormValidator(
+const editProfileValidiation = new FormValidator(
   validationConfig,
   editProfilePopup
 );
-const formsValidation = [editProfileValdiation, addCardValidation];
+const formsValidation = [editProfileValidiation, addCardValidation];
 
 //card generation logix
 const generateCard = (item) => {
   const newCard = new Card(
     {
       data: item,
-      handleCardClick: popupImg.open.bind(popupImg),
+      handleCardClick: popupImg.open,
     },
     cardConfig.cardSelector
   );
@@ -52,7 +55,7 @@ const cardList = new Section(
   {
     items: initialCards,
     renderer: (card) => {
-      cardList.addItem(generateCard(card)); //undefined is falsy, so did not include second parameter "false"
+      cardList.addInitialItem(generateCard(card));
     },
   },
   cardConfig.cardsContainerSelector
@@ -73,7 +76,7 @@ const editPopup = new PopupWithForm(popupConfig.popupEditProfileSelector, {
   },
 
   resetValidation: () => {
-    editProfileValdiation.clearFormErrors(true);
+    editProfileValidiation.clearFormErrors(true);
   },
 });
 
@@ -83,7 +86,7 @@ const addCardPopup = new PopupWithForm(popupConfig.popupCreateCardSelector, {
       {
         items: [{ name, link }], //array because of forEach fucntion in Section
         renderer: (item) => {
-          cardSection.addItem(generateCard(item), true);
+          cardSection.addItem(generateCard(item));
         },
       },
       cardConfig.cardsContainerSelector
