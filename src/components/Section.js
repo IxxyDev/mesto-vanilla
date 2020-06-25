@@ -13,13 +13,9 @@ export default class Section {
     this._container.append(cardItem);
   }
 
-  renderCards(data = false) {
-    if (data) {
-      this._renderer(data);
-    } else {
-      this._renderedItems.forEach((item) => {
-        this._renderer(item);
-      });
-    }
+  renderCards() {
+    this._renderedItems.forEach((item) => {
+      this._renderer(item);
+    });
   }
 }

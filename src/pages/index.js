@@ -80,7 +80,6 @@ const editPopup = new PopupWithForm(popupConfig.popupEditProfileSelector, {
 const addCardPopup = new PopupWithForm(popupConfig.popupCreateCardSelector, {
   handleFormSubmit: (item) => {
     cardList.addItem(generateCard(item));
-    cardList.renderCards({ name: item.name, link: item.link });
     addCardPopup.close();
   },
 
