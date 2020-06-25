@@ -1,6 +1,3 @@
-/*Мне тоже показалось странным помещение husky и prettier в dependencies (работали в Nuxt.js для РакЛечится, ментор
-подключал именно так)*/
-
 import './index.css';
 
 import Card from '../components/Card.js';
@@ -33,11 +30,11 @@ const userInfo = new UserInfo({
   description: profileConfig.descriptionSelector,
 });
 const addCardValidation = new FormValidator(validationConfig, createCardPopup);
-const editProfileValidiation = new FormValidator(
+const editProfileValidation = new FormValidator(
   validationConfig,
   editProfilePopup
 );
-const formsValidation = [editProfileValidiation, addCardValidation];
+const formsValidation = [editProfileValidation, addCardValidation];
 
 //card generation logix
 const generateCard = (item) => {
@@ -76,22 +73,14 @@ const editPopup = new PopupWithForm(popupConfig.popupEditProfileSelector, {
   },
 
   resetValidation: () => {
-    editProfileValidiation.clearFormErrors(true);
+    editProfileValidation.clearFormErrors(true);
   },
 });
 
 const addCardPopup = new PopupWithForm(popupConfig.popupCreateCardSelector, {
-  handleFormSubmit: ([name, link]) => {
-    const cardSection = new Section(
-      {
-        items: [{ name, link }], //array because of forEach fucntion in Section
-        renderer: (item) => {
-          cardSection.addItem(generateCard(item));
-        },
-      },
-      cardConfig.cardsContainerSelector
-    );
-    cardSection.renderCards();
+  handleFormSubmit: (item) => {
+    cardList.addItem(generateCard(item));
+    cardList.renderCards({ name: item.name, link: item.link });
     addCardPopup.close();
   },
 

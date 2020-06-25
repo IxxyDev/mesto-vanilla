@@ -10,17 +10,13 @@ export default class Popup {
   }
 
   _setEventListeners() {
-    document.addEventListener('keyup', (evt) => this._handleEscClose(evt));
-    this._popup.addEventListener('mousedown', (evt) =>
-      this._handleClickClose(evt)
-    );
+    document.addEventListener('keyup', this._handleEscClose);
+    this._popup.addEventListener('mousedown', this._handleClickClose);
   }
 
   _removeEventListeners() {
-    document.removeEventListener('keyup', (evt) => this._handleEscClose(evt));
-    this._popup.removeEventListener('mousedown', (evt) =>
-      this._handleClickClose(evt)
-    );
+    document.removeEventListener('keyup', this._handleEscClose);
+    this._popup.removeEventListener('mousedown', this._handleClickClose);
   }
 
   open() {
