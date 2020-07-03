@@ -1,12 +1,12 @@
 import Popup from './Popup.js';
 
-export default class PopupForDelete extends popup {
+export default class PopupForDelete extends Popup {
   constructor(popupSelector, { handleConfirmation }) {
     super(popupSelector), (this._handleConfirmation = handleConfirmation);
-    this._form = this._popup.querySelector('.popup__form');
   }
 
   _setEventListeners() {
+    this._form = this._popup.querySelector('.popup__form');
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleConfirmation({
@@ -18,6 +18,6 @@ export default class PopupForDelete extends popup {
   }
 
   open(data) {
-    (this._id = data._id), (this._deleteCard = data.deleteCard), super.open();
+    (this._id = data.id), (this._deleteCard = data.deleteCard), super.open();
   }
 }

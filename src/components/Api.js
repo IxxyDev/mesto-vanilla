@@ -12,24 +12,24 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}cards`, {
       headers: this._headers,
     }).then(this._returnResponse);
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}users/me`, {
       headers: this._headers,
     })
       .then(this._returnResponse)
-      .then((response) => {
-        this.myId = response._id;
-        return response;
+      .then((res) => {
+        this.mainId = res._id;
+        return res;
       });
   }
 
-  updateUserInfo(data) {
-    return fetch(`${this._baseUrl}/users/me`, {
+  changeUserInfo(data) {
+    return fetch(`${this._baseUrl}users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(data),
@@ -37,7 +37,7 @@ export default class Api {
   }
 
   changeUserAvatar(data) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(data),
@@ -45,24 +45,30 @@ export default class Api {
   }
 
   addCard(data) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(data),
     }).then(this._returnResponse);
   }
 
-  likeCard({ method, cardId }) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method,
+  likeCard(cardId, isLiked) {
+    console.log(cardId);
+    let method;
+    if (isLiked) {
+      method = 'DELETE';
+    } else {
+      method = 'PUT';
+    }
+    return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
+      method: method,
       headers: this._headers,
-    })
-      .then(this._returnResponse)
-      .then((data) => data.likes);
+    }).then(this._returnResponse);
   }
 
   deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    console.log(this._headers);
+    return fetch(`${this._baseUrl}cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
     }).then(this._returnResponse);

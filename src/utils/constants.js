@@ -47,6 +47,9 @@ export const editProfilePopup = document.querySelector(
 export const createCardPopup = document.querySelector(
   popupConfig.popupCreateCardSelector
 );
+export const editAvatarPopup = document.querySelector(
+  '.popup_type_avatar-edit'
+);
 export const editButton = document.querySelector(
   profileConfig.editButtonSelector
 );
@@ -69,6 +72,8 @@ export const addCardName = document.querySelector(
 export const addCardUrl = createCardPopup.querySelector(
   popupConfig.inputDescriptionSelector
 );
+export const avatar = document.querySelector('.profile__avatar');
+export const changeAvatarForm = editAvatarPopup.querySelector('.popup__form');
 
 export const initialCards = [
   {
@@ -102,3 +107,11 @@ export const initialCards = [
       'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
   },
 ];
+
+//for api
+
+export const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-12/';
+export const headers = {
+  authorization: 'd6770652-b28e-4007-834e-116536b370da',
+  'Content-Type': 'application/json',
+};

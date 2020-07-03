@@ -17,7 +17,7 @@ export default class UserInfo {
   }
 
   setUserId(user) {
-    this._userId = data.id;
+    this._userId = user.id;
   }
 
   setUserAvatar(user) {

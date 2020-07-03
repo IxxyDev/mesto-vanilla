@@ -8,7 +8,8 @@ export default class Card {
   ) {
     this._data = data;
     this._userId = userId;
-    this._cardId = data.id;
+    this._cardId = data._id;
+    this._likes = data.likes;
     this._link = data.link;
     this._name = data.name;
     this._handleCardClick = handleCardClick;
@@ -30,7 +31,7 @@ export default class Card {
       '.element__delete-button'
     );
     this._likeCardBtn = this._element.querySelector('.element__like-button');
-    this._likesCounter = this._element.querySelector('.element__likes-counter');
+    this._likesCounter = this._element.querySelector('.element__like-counter');
     this._cardTitle = this._element.querySelector('.element__title');
     this._cardImg = this._element.querySelector('.element__image');
   }
@@ -42,6 +43,7 @@ export default class Card {
     )
       .then((res) => {
         this._likeCardBtn.classList.toggle('element__like-button_active');
+        console.log(res);
         this._likes = res.likes;
         this._likesCounter.textContent = this._likes.length;
       })
@@ -79,7 +81,10 @@ export default class Card {
 
   createCard() {
     this._element = this._getTemplate();
+    this._initializeCardAttributes();
     this._setEventListeners();
+    this._setUserLike();
+    this._getLikesAmount();
     this._element.querySelector(cardConfig.cardImgSelector).src = this._link;
     this._element.querySelector(cardConfig.cardImgSelector).alt = this._name;
     this._element.querySelector(
