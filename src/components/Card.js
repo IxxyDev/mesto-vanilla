@@ -1,11 +1,19 @@
 import { cardConfig } from '../utils/constants.js';
 
 export default class Card {
-  constructor({ data, handleCardClick }, templateSelector) {
+  constructor(
+    { data, handleCardClick, handleDeleteCard, handleLikeCard },
+    templateSelector,
+    userId
+  ) {
     this._data = data;
+    this._userId = userId;
+    this._cardId = data.id;
     this._link = data.link;
     this._name = data.name;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteCard = handleDeleteCard;
+    this._handleLikeCard = handleLikeCard;
     this._templateSelector = templateSelector;
   }
 
@@ -17,10 +25,37 @@ export default class Card {
     return cardElement;
   }
 
+  _initializeCardAttributes() {
+    this._deleteCardBtn = this._element.querySelector(
+      '.element__delete-button'
+    );
+    this._likeCardBtn = this._element.querySelector('.element__like-button');
+    this._likesCounter = this._element.querySelector('.element__likes-counter');
+    this._cardTitle = this._element.querySelector('.element__title');
+    this._cardImg = this._element.querySelector('.element__image');
+  }
+
   _toggleLikeStatus() {
-    this._element
-      .querySelector(cardConfig.cardLikeSelector)
-      .classList.toggle('element__like-button_active');
+    this._handleLikeCard(
+      this._cardId,
+      this._likes.some((item) => item.id === this._userId)
+    )
+      .then((res) => {
+        this._likeCardBtn.classList.toggle('element__like-button_active');
+        this._likes = res.likes;
+        this._likesCounter.textContent = this._likes.length;
+      })
+      .catch((error) => console.error(error));
+  }
+
+  _getLikesAmount() {
+    this._likesCounter.textContent = this._likes.length;
+  }
+
+  _setUserLike() {
+    if (this._likes.some((item) => item.id === this._userId)) {
+      this._likeCardBtn.classList.add('element__like-button_active');
+    }
   }
 
   _deleteCard() {
@@ -28,9 +63,12 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._element
-      .querySelector(cardConfig.cardDeleteSelector)
-      .addEventListener('click', () => this._deleteCard());
+    this._deleteCardBtn.addEventListener('click', () =>
+      this._handleDeleteCard({
+        id: this._cardId,
+        deleteCard: this._deleteCard.bind(this),
+      })
+    );
     this._element
       .querySelector(cardConfig.cardLikeSelector)
       .addEventListener('click', () => this._toggleLikeStatus());
