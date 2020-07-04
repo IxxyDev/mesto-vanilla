@@ -72,7 +72,7 @@ export const addCardName = document.querySelector(
 export const addCardUrl = createCardPopup.querySelector(
   popupConfig.inputDescriptionSelector
 );
-export const avatar = document.querySelector('.profile__avatar');
+export const avatar = document.querySelector('.profile__avatar-background');
 export const changeAvatarForm = editAvatarPopup.querySelector('.popup__form');
 
 export const initialCards = [
