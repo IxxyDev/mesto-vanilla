@@ -89,7 +89,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 //popups
 const deleteCardPopup = new PopupForDelete('.popup_type_delete-card', {
   handleConfirmation: ({ id, deleteCard }) => {
-    console.log(id, deleteCard);
     api.deleteCard(id).catch((error) => console.error(error));
     deleteCard();
     deleteCardPopup.close();
@@ -105,7 +104,6 @@ const editPopup = new PopupWithForm(popupConfig.popupEditProfileSelector, {
         about: user.description,
       })
       .then((res) => {
-        console.log(res);
         userInfo.setUserInfo(res);
         editPopup.close();
       })
