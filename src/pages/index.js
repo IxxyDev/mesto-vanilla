@@ -102,9 +102,10 @@ const editPopup = new PopupWithForm(popupConfig.popupEditProfileSelector, {
     api
       .changeUserInfo({
         name: user.name,
-        description: user.description,
+        about: user.description,
       })
       .then((res) => {
+        console.log(res);
         userInfo.setUserInfo(res);
         editPopup.close();
       })
@@ -149,7 +150,7 @@ const changeAvatarPopup = new PopupWithForm('.popup_type_avatar-edit', {
   handleFormSubmit: (data) => {
     changeAvatarPopup.showLoadingStatus(true);
     api
-      .changeUserAvatar({ avatar: data.avatar })
+      .changeUserAvatar({ avatar: data.link })
       .then((res) => {
         changeAvatarPopup.close();
         userInfo.setUserAvatar(res);

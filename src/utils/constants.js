@@ -1,5 +1,3 @@
-//I guess this config logix can be useful in future
-
 export const popupConfig = {
   popupSelector: '.popup',
   formSelector: '.popup__form',
