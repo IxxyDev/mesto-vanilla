@@ -2,7 +2,8 @@ import Popup from './Popup.js';
 
 export default class PopupForDelete extends Popup {
   constructor(popupSelector, { handleConfirmation }) {
-    super(popupSelector), (this._handleConfirmation = handleConfirmation);
+    super(popupSelector);
+    this._handleConfirmation = handleConfirmation;
   }
 
   _setEventListeners() {
@@ -19,6 +20,8 @@ export default class PopupForDelete extends Popup {
   }
 
   open(data) {
-    (this._id = data.id), (this._deleteCard = data.deleteCard), super.open();
+    this._id = data.id;
+    this._deleteCard = data.deleteCard;
+    super.open();
   }
 }
