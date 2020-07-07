@@ -61,7 +61,7 @@ const generateCard = (item) => {
       handleDeleteCard: (item) => {
         deleteCardPopup.open(item);
       },
-      handleLikeCard: api.likeCard.bind(api),
+      handleLikeCard: (cardId, isLiked) => api.likeCard(cardId, isLiked), //не уверен, что верно интерпретировал замечание. Предположу, что тут нужно избавиться от сильной зависимости и повторить логику handleDeleteCard
     },
     cardConfig.cardSelector,
     userInfo.getUserId()

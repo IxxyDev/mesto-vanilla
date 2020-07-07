@@ -1,3 +1,5 @@
+// тут prettier и husky шалили
+
 import Popup from './Popup.js';
 
 export default class PopupForDelete extends Popup {
