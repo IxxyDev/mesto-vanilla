@@ -53,13 +53,8 @@ export default class Api {
   }
 
   likeCard(cardId, isLiked) {
-    console.log(cardId);
     let method;
-    if (isLiked) {
-      method = 'DELETE';
-    } else {
-      method = 'PUT';
-    }
+    isLiked ? (method = 'DELETE') : (method = 'PUT');
     return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
       method: method,
       headers: this._headers,
@@ -67,7 +62,6 @@ export default class Api {
   }
 
   deleteCard(cardId) {
-    console.log(this._headers);
     return fetch(`${this._baseUrl}cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,

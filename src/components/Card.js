@@ -40,7 +40,7 @@ export default class Card {
   _toggleLikeStatus() {
     this._handleLikeCard(
       this._cardId,
-      this._likes.some((item) => item.id === this._userId)
+      this._likes.some((item) => item._id === this._userId)
     )
       .then((res) => {
         this._likeCardBtn.classList.toggle('element__like-button_active');
@@ -55,7 +55,7 @@ export default class Card {
   }
 
   _setUserLike() {
-    if (this._likes.some((item) => item.id === this._userId)) {
+    if (this._likes.some((item) => item._id === this._userId)) {
       this._likeCardBtn.classList.add('element__like-button_active');
     }
   }

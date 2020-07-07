@@ -1,3 +1,5 @@
+//Предыдущий коллега наоборот попросил сделать два метода для добавления))
+
 export default class Section {
   constructor({ renderer }, containerSelector) {
     this._renderer = renderer;

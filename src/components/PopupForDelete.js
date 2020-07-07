@@ -6,7 +6,9 @@ export default class PopupForDelete extends Popup {
   }
 
   _setEventListeners() {
+    super._setEventListeners();
     this._form = this._popup.querySelector('.popup__form');
+    console.log(this._form);
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleConfirmation({
@@ -14,7 +16,6 @@ export default class PopupForDelete extends Popup {
         deleteCard: this._deleteCard,
       });
     });
-    super._setEventListeners();
   }
 
   open(data) {

@@ -10,6 +10,7 @@ export default class PopupWithForm extends Popup {
     this._resetValidation = resetValidation;
     this._inputList = this._popup.querySelectorAll(popupConfig.inputSelector);
     this._submitBtn = this._popup.querySelector('.popup__button');
+    this._submitBtnText = this._submitBtn.textContent;
     this._handleSubmit = (evt) => {
       this._submitFormHandler(evt);
     };
